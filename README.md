@@ -20,4 +20,5 @@
 
 ### Dependências:
 [Rust](https://www.rust-lang.org/pt-BR/)
+
 [SQlite](https://sqlite.org/index.html)
