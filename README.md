@@ -13,7 +13,7 @@
 - [x] Criar Conexão com Banco de Dados
 - [x] Coletar as Entradas do Usuário
 - [ ] Perguntar se os Dados estão corretos
-- [ ] Gravar as Informações no Banco de Dados
+- [x] Gravar as Informações no Banco de Dados
 - [ ]  Possibilitar Alteração de Cadastro
 - [ ] Listar os Contatos
 - [ ] Possibilitar a consulta dos Dados
