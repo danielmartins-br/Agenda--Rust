@@ -12,8 +12,12 @@
 ### Lista de Tarefas:
 - [x] Criar Conexão com Banco de Dados
 - [x] Coletar as Entradas do Usuário
-- [ ] Perguntar se os Dados estão corretos
+- [ ] Perguntar se os Dados inseridos estão corretos
 - [x] Gravar as Informações no Banco de Dados
 - [ ]  Possibilitar Alteração de Cadastro
 - [ ] Listar os Contatos
 - [ ] Possibilitar a consulta dos Dados
+
+### Dependências:
+[Rust](https://www.rust-lang.org/pt-BR/)
+[SQlite](https://sqlite.org/index.html)
