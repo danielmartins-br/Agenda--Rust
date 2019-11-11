@@ -14,5 +14,5 @@
 - [x] Coletar as Entradas do Usuário
 - [x] Gravar as Informações no Banco de Dados
 - []  Possibilitar Alteração de Cadastro
-- []  Listar os Contatos
-- []  Possibilitar a consulta dos Dados
+- [ ] Listar os Contatos
+- [ ] Possibilitar a consulta dos Dados
