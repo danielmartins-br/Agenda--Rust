@@ -3,10 +3,10 @@
 ##### Este programa foi criado para ser apresentado na disciplina de _Linguagens e Paradigmas de Programação_, foi proposto aos alunos que pesquisassem diferentes linguagens de programação e apresentassem seus prós e contras, ambientes de desenvolvimento, funcionalidades das linguagens e dispositivos ou ambientes onde podem ser utilizadas. Este programa faz parte da segunda avaliação, onde devemos implementar na linguagem escolhida anteriormente um Sistema de Agenda que dentre suas funcionalidades contenha os requisitos listados abaixo e os grave permanentemente em um banco de dados ou arquivo de texto.
 
 ### Requisitos:
-##### -> Inclusão
-##### -> Alteração
-##### -> Exclusão
-##### -> Consulta
+##### -> Inclusão de Contato
+##### -> Alteração do Contato
+##### -> Exclusão do Contato
+##### -> Consulta dos Contatos
 ##### -> Listagem dos Contatos já Inseridos
 
 ### Lista de Tarefas:
