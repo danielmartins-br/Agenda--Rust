@@ -1,0 +1,1 @@
+{"rustc":10683586082858123265,"features":"[]","target":5876509270064395840,"profile":14891217944882224483,"path":1036222786711178230,"deps":[[6226127244278466153,"rusqlite",false,15158908993181886190]],"local":[{"CheckDepInfo":{"dep_info":"debug/.fingerprint/agenda_rust-d34eb5f075b5866a/dep-bin-agenda_rust-d34eb5f075b5866a"}}],"rustflags":[],"metadata":1575689610398267129}
