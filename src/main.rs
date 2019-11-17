@@ -31,34 +31,36 @@ fn main()
      println!("Selecione uma Opção: \n\n1-> Cadastrar Contato\n2-> Listar Contatos\n");
      read(&mut opcao);
 
+     //converte string para int
      let opcao: i32 = opcao.trim().parse().unwrap();
      if opcao == 1
      {
-          println!("\nFunciona");
+
+          println!("\nEntre com o Nome do Contato: ");
+          io::stdin().read_line(&mut grava_nome).expect("Ocorreu um Erro");
+
+          println!("\nInsira o Email: ");
+          io::stdin().read_line(&mut grava_email).expect("Ocorreu um Erro");
+
+          println!("\nInsira o Número de Telefone: ");
+          io::stdin().read_line(&mut grava_telefone).expect("Ocorreu um Erro");
+
+          println!("\nInsira a Data de Nascimento (00/00/0000): ");
+          io::stdin().read_line(&mut grava_nascimento).expect("Ocorreu um Erro");
+
+          println!("\n----Dados Inseridos----");
+          print!("Nome -> {}",grava_nome);
+          print!("Email -> {}",grava_email);
+          print!("Telefone -> {}",grava_telefone);
+          print!("Nascimento -> {}",grava_nascimento);
+
+          cria_banco.execute("INSERT INTO Contatos (nome,email,telefone,dataNascimento) VALUES (?1,?2,?3,?4)",
+                  &[&grava_nome, &grava_email,&grava_telefone,&grava_nascimento]).unwrap();
      }
+     
      if opcao == 2
      {
           println!("\nTambém Funcionou");
      }
 
-     println!("\nEntre com o Nome do Contato: ");
-     io::stdin().read_line(&mut grava_nome).expect("Ocorreu um Erro");
-
-     println!("\nInsira o Email: ");
-     io::stdin().read_line(&mut grava_email).expect("Ocorreu um Erro");
-
-     println!("\nInsira o Número de Telefone: ");
-     io::stdin().read_line(&mut grava_telefone).expect("Ocorreu um Erro");
-
-     println!("\nInsira a Data de Nascimento (00/00/0000): ");
-     io::stdin().read_line(&mut grava_nascimento).expect("Ocorreu um Erro");
-
-     println!("\n----Dados Inseridos----");
-     print!("Nome -> {}",grava_nome);
-     print!("Email -> {}",grava_email);
-     print!("Telefone -> {}",grava_telefone);
-     print!("Nascimento -> {}",grava_nascimento);
-
-     cria_banco.execute("INSERT INTO Contatos (nome,email,telefone,dataNascimento) VALUES (?1,?2,?3,?4)",
-             &[&grava_nome, &grava_email,&grava_telefone,&grava_nascimento]).unwrap();
 }
