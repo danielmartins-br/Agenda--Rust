@@ -1,7 +1,13 @@
 extern crate rusqlite;
 use rusqlite::{Connection,NO_PARAMS};
 use std::io;
+use std::io::{stdin,stdout,Write};
 
+fn read(input: &mut String)
+{
+     stdout().flush().expect("Falha no Flush");
+     stdin().read_line(input).expect("Erro na Leitura");
+}
 fn main()
 {
      let cria_banco = Connection::open("contatos.db").unwrap();
@@ -13,14 +19,27 @@ fn main()
           telefone VARCHAR(20) NOT NULL,
           dataNascimento VARCHAR(10)
                )", NO_PARAMS).unwrap();
-     
-//   let nome: String = "Gibson".to_string();
-//   let email: String = "smith@mormail.com".to_string();
 
+     let mut opcao = String::new();
      let mut grava_nome = String::new();
      let mut grava_email = String::new();
      let mut grava_telefone = String::new();
      let mut grava_nascimento = String::new();
+
+     println!("\nBem Vindo a Sua Agenda em Rust");
+     println!("-------------------------------");
+     println!("Selecione uma Opção: \n\n1-> Cadastrar Contato\n2-> Listar Contatos\n");
+     read(&mut opcao);
+
+     let opcao: i32 = opcao.trim().parse().unwrap();
+     if opcao == 1
+     {
+          println!("\nFunciona");
+     }
+     if opcao == 2
+     {
+          println!("\nTambém Funcionou");
+     }
 
      println!("\nEntre com o Nome do Contato: ");
      io::stdin().read_line(&mut grava_nome).expect("Ocorreu um Erro");
