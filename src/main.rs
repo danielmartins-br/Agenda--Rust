@@ -10,7 +10,7 @@ fn main()
           id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
           nome VARCHAR(50) NOT NULL,
           email VARHCAR(40) NOT NULL,
-          telefone VARCHAR(20),
+          telefone VARCHAR(20) NOT NULL,
           dataNascimento VARCHAR(10)
                )", NO_PARAMS).unwrap();
      
