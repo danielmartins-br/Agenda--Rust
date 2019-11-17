@@ -8,9 +8,9 @@ fn main()
 
      cria_banco.execute(" CREATE TABLE IF NOT EXISTS Contatos (
           id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-          nome TEXT NOT NULL,
-          email TEXT NOT NULL,
-          telefone VARCHAR(20),
+          nome VARCHAR(50) NOT NULL,
+          email VARHCAR(40) NOT NULL,
+          telefone VARCHAR(20) NOT NULL,
           dataNascimento VARCHAR(10)
                )", NO_PARAMS).unwrap();
      
