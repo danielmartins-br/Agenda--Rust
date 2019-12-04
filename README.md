@@ -17,6 +17,7 @@
 - [ ] Possibilitar Alteração do Cadastro
 - [x] Listar os Contatos
 - [ ] Possibilitar a consulta dos Dados
+- [x] Opção para deletar um Contato
 
 ### Dependências:
 [Rust](https://www.rust-lang.org/pt-BR/)
