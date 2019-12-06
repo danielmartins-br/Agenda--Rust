@@ -38,7 +38,7 @@ fn main() -> Result<()>
 
      println!("\nBem Vindo a Sua Agenda em Rust");
      println!("----------------------------------------");
-     println!("Selecione uma Opção: \n\n1-> Cadastrar Contato\n2-> Listar Contatos\n3-> Excluir Contato\n");
+     println!("Selecione uma Opção: \n\n1-> Cadastrar Contato\n2-> Listar Contatos\n3-> Excluir Contato\n4-> Atualizar dados do Contato\n5-> Consultar Contato");
      read(&mut opcao);
 //Todo mudar tudo para read,por causa da biblioteca
      //converte string para int
@@ -48,14 +48,11 @@ fn main() -> Result<()>
 
           println!("\nEntre com o Nome do Contato: ");
           read(&mut grava_nome);
-
           println!("\nInsira o Email: ");
           read(&mut grava_email);
-
           println!("\nInsira o Número de Telefone: ");
           read(&mut grava_telefone);
-
-          println!("\nInsira a Data de Nascimento (00/00/0000): ");
+          println!("\nInsira a Data de Nascimento (Exemplo: 00/00/0000): ");
           read(&mut grava_nascimento);
 
           println!("\n\n----Dados Inseridos com Sucesso----");
@@ -96,6 +93,56 @@ fn main() -> Result<()>
 //Todo listar informações do contato removido 
           cria_banco.execute("DELETE FROM Contatos where id = ?",&[&id]).unwrap();
           println!("\nContato deletado com Sucesso!");
+     }
+
+     if opcao == 4
+     {
+          println!("\n-----------Update de Dados-------------\n");
+          println!("\nInsira o ID do Contato que deseja Atualizar: ");
+          read(&mut id);
+
+	     println!("\nEntre com o Nome do Contato: ");
+          read(&mut grava_nome);
+          println!("\nInsira o Email: ");
+          read(&mut grava_email);
+          println!("\nInsira o Número de Telefone: ");
+          read(&mut grava_telefone);
+          println!("\nInsira a Data de Nascimento (Exemplo: 00/00/0000): ");
+          read(&mut grava_nascimento);
+
+          println!("\n\n----Dados Atualizados com Sucesso----");
+          print!("Nome -> {}",grava_nome);
+          print!("Email -> {}",grava_email);
+          print!("Telefone -> {}",grava_telefone);
+          print!("Nascimento -> {}",grava_nascimento);
+
+          cria_banco.execute("UPDATE Contatos SET nome=?,email=?,telefone=?,dataNascimento=? WHERE id = ?",
+                  &[&grava_nome, &grava_email,&grava_telefone,&grava_nascimento,&id]).unwrap();
+
+     }
+
+     if opcao == 5
+     { /*
+          println!("\n\n----Consultar dados de um Contato----");
+          println!("\nInsira o ID do Contato que deseja Pesquisar: ");
+          read(&mut id);
+          let id: i32 = id.trim().parse().unwrap();
+ 
+          let mut tnt  = cria_banco.prepare("SELECT nome,email,telefone,dataNascimento,id FROM Contatos WHERE id = ?")?;
+          tnt.execute(&[id]).unwrap();
+          let itetor = tnt.query_map(params![], |row|{ 
+                    Ok(Contatos {
+                         nome: row.get(0)?,
+                         email: row.get(1)?,
+                         telefone: row.get(2)?,
+                         nascimento: row.get(3)?,
+                         id: row.get(4)?,
+                         })
+                    })?;
+          for pess in itetor {
+               println!("Contato: {:?}",pess);
+          }
+          */
      }
      Ok(())
 }
