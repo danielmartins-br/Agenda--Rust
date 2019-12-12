@@ -8,3 +8,4 @@ edition = "2018"
 
 [dependencies]
 rusqlite = "0.20.0"
+colored = "1.8"

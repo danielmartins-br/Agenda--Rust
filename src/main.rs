@@ -1,6 +1,8 @@
 extern crate rusqlite;
 use rusqlite::{Connection,params,Result};
 use std::io::{stdin,stdout,Write};
+use colored::*;
+use std::process::Command;
 
 #[derive(Debug)]
 struct Contatos{
@@ -15,6 +17,16 @@ fn read(input: &mut String)
 {
      stdout().flush().expect("Falha no Flush");
      stdin().read_line(input).expect("Erro na Leitura");
+}
+
+fn clear_screen() 
+{
+     //Grava o comando clear na variavel output
+     let output = Command::new("clear").output().unwrap_or_else(|e| {
+          panic!("falha ao executar processo: {}", e)
+         });
+     //printa a variavel, limpando a tela
+     println!("{}", String::from_utf8_lossy(&output.stdout));
 }
 
 fn main() -> Result<()>
@@ -35,16 +47,19 @@ fn main() -> Result<()>
      let mut grava_email = String::new();
      let mut grava_telefone = String::new();
      let mut grava_nascimento = String::new();
-
-     println!("\nBem Vindo a Sua Agenda em Rust");
-     println!("----------------------------------------");
+     
+     clear_screen();
+     println!("{}","\nBem Vindo a Sua Agenda em Rust".green().bold());
+     println!("{}","----------------------------------------".bold());
      println!("Selecione uma Opção: \n\n1-> Cadastrar Contato\n2-> Listar Contatos\n3-> Excluir Contato\n4-> Atualizar dados do Contato\n5-> Consultar Contato");
+     println!("0-> Ajuda/\n");
+     print!("Opção: ");
      read(&mut opcao);
-//Todo mudar tudo para read,por causa da biblioteca
      //converte string para int
      let opcao: i32 = opcao.trim().parse().unwrap();
      if opcao == 1
      {
+          println!("{}","\n-----------Cadastro de Contato------------\n".bold());
 
           println!("\nEntre com o Nome do Contato: ");
           read(&mut grava_nome);
@@ -55,7 +70,7 @@ fn main() -> Result<()>
           println!("\nInsira a Data de Nascimento (Exemplo: 00/00/0000): ");
           read(&mut grava_nascimento);
 
-          println!("\n\n----Dados Inseridos com Sucesso----");
+          println!("{}","\n\n----Dados Inseridos com Sucesso----".green().bold());
           print!("Nome -> {}",grava_nome);
           print!("Email -> {}",grava_email);
           print!("Telefone -> {}",grava_telefone);
@@ -67,10 +82,10 @@ fn main() -> Result<()>
      
      if opcao == 2
      {
-          println!("\n-----------Lista de Contatos------------\n");
+          println!("{}","\n-----------Lista de Contatos------------\n".bold());
 
           let mut stmt  = cria_banco.prepare("SELECT nome,email,telefone,dataNascimento,id FROM Contatos")?;
-          let iterator = stmt.query_map(params![], |row|{ 
+          let iterador = stmt.query_map(params![], |row|{ 
                     Ok(Contatos {
                          nome: row.get(0)?,
                          email: row.get(1)?,
@@ -79,70 +94,99 @@ fn main() -> Result<()>
                          id: row.get(4)?,
                          })
                     })?;
-          for pessoa in iterator {
-               println!("Contato: {:?}",pessoa);
+          for pessoa in iterador {
+               println!("{:?}",pessoa);
           }
      }
 
      if opcao == 3
      { 
-          println!("\n-----------Deletar Contato-------------\n");
+          println!("{}","\n-----------Deletar Contato-------------\n".bold());
           println!("\nInsira o ID do Contato que deseja Deletar: ");
           read(&mut id);
           let id: i32 = id.trim().parse().unwrap();
 //Todo listar informações do contato removido 
           cria_banco.execute("DELETE FROM Contatos where id = ?",&[&id]).unwrap();
-          println!("\nContato deletado com Sucesso!");
+          println!("{}","\nContato deletado com Sucesso!".red().bold());
      }
 
      if opcao == 4
      {
-          println!("\n-----------Update de Dados-------------\n");
+          println!("{}","\n-----------Atualizar Dados do Contato-------------\n".bold());
           println!("\nInsira o ID do Contato que deseja Atualizar: ");
           read(&mut id);
+//Todo verificar se o contato existe no BD
+          let mut campo = String::new();
+          println!("Qual Campo Deseja Alterar:\n");
+          println!("1~> Nome\n2~> Email\n3~> Telefone\n4~> Data de Nascimento\n0~> Todos os Campos");
+          print!("Campo: ");
+          read(&mut campo);
+          let campo: i32 = campo.trim().parse().unwrap();
+//Todo adicionar dicas
+          if campo == 1
+          {
+               println!("\nInsira o Nome do Contato: ");
+               read(&mut grava_nome);
+               cria_banco.execute("UPDATE Contatos SET nome=? WHERE id = ?",
+                  &[&grava_nome,&id]).unwrap();
+               println!("\nAlteração Concluida!");
+          }
 
-	     println!("\nEntre com o Nome do Contato: ");
-          read(&mut grava_nome);
-          println!("\nInsira o Email: ");
-          read(&mut grava_email);
-          println!("\nInsira o Número de Telefone: ");
-          read(&mut grava_telefone);
-          println!("\nInsira a Data de Nascimento (Exemplo: 00/00/0000): ");
-          read(&mut grava_nascimento);
+          if campo == 2
+          {
+               println!("\nInsira o Email: ");
+               read(&mut grava_email);
+               cria_banco.execute("UPDATE Contatos SET email=? WHERE id = ?",
+                  &[&grava_email,&id]).unwrap();
+               println!("\nAlteração Concluida!");
+          }
+          
+          if campo == 3
+          {
+               println!("\nInsira o Número de Telefone: ");
+               read(&mut grava_telefone);
+               cria_banco.execute("UPDATE Contatos SET telefone=? WHERE id = ?",
+                  &[&grava_telefone,&id]).unwrap();
+               println!("\nAlteração Concluida!");
+          }
 
-          println!("\n\n----Dados Atualizados com Sucesso----");
-          print!("Nome -> {}",grava_nome);
-          print!("Email -> {}",grava_email);
-          print!("Telefone -> {}",grava_telefone);
-          print!("Nascimento -> {}",grava_nascimento);
+          if campo == 4
+          {
+               println!("\nInsira a Data de Nascimento (Exemplo: 00/00/0000): ");
+               read(&mut grava_nascimento);
+               cria_banco.execute("UPDATE Contatos SET dataNascimento=? WHERE id = ?",
+                  &[&grava_nascimento,&id]).unwrap();
+               println!("\nAlteração Concluida!");
+          }
 
-          cria_banco.execute("UPDATE Contatos SET nome=?,email=?,telefone=?,dataNascimento=? WHERE id = ?",
+          if campo == 0
+          {
+               println!("\nEntre com o Nome do Contato: ");
+               read(&mut grava_nome);
+               println!("\nInsira o Email: ");
+               read(&mut grava_email);
+               println!("\nInsira o Número de Telefone: ");
+               read(&mut grava_telefone);
+               println!("\nInsira a Data de Nascimento (Exemplo: 00/00/0000): ");
+               read(&mut grava_nascimento);
+
+               println!("\n\n----Dados Atualizados com Sucesso----");
+               print!("Nome -> {}",grava_nome);
+               print!("Email -> {}",grava_email);
+               print!("Telefone -> {}",grava_telefone);
+               print!("Nascimento -> {}",grava_nascimento);
+
+               cria_banco.execute("UPDATE Contatos SET nome=?,email=?,telefone=?,dataNascimento=? WHERE id = ?",
                   &[&grava_nome, &grava_email,&grava_telefone,&grava_nascimento,&id]).unwrap();
+          }
 
      }
 
      if opcao == 5
-     { /*
-          println!("\n\n----Consultar dados de um Contato----");
-          println!("\nInsira o ID do Contato que deseja Pesquisar: ");
-          read(&mut id);
-          let id: i32 = id.trim().parse().unwrap();
- 
-          let mut tnt  = cria_banco.prepare("SELECT nome,email,telefone,dataNascimento,id FROM Contatos WHERE id = ?")?;
-          tnt.execute(&[id]).unwrap();
-          let itetor = tnt.query_map(params![], |row|{ 
-                    Ok(Contatos {
-                         nome: row.get(0)?,
-                         email: row.get(1)?,
-                         telefone: row.get(2)?,
-                         nascimento: row.get(3)?,
-                         id: row.get(4)?,
-                         })
-                    })?;
-          for pess in itetor {
-               println!("Contato: {:?}",pess);
-          }
-          */
+     { 
+          println!("\n-----------Pesquisar dados do Contato-------------\n");
+         
      }
+
      Ok(())
 }
