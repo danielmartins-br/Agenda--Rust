@@ -1,3 +1,4 @@
+//MUDAR NOME DO PROJETO - AGENDA-RUST
 extern crate rusqlite;
 use rusqlite::{Connection,params,Result};
 use std::io::{stdin,stdout,Write};
@@ -49,9 +50,9 @@ fn main() -> Result<()>
      let mut grava_nascimento = String::new();
      
      clear_screen();
-     println!("{}","\nBem Vindo a Sua Agenda em Rust".green().bold());
-     println!("{}","----------------------------------------".bold());
-     println!("Selecione uma Opção: \n\n1-> Cadastrar Contato\n2-> Listar Contatos\n3-> Excluir Contato\n4-> Atualizar dados do Contato\n5-> Consultar Contato");
+     println!("{}","Bem Vindo a Sua Agenda".green().bold());
+     println!("{}","-----------------------".bold());
+     println!("Selecione uma Opção: \n\n1-> Cadastrar \n2-> Listar \n3-> Excluir \n4-> Atualizar Dados\n5-> Consultar");
      println!("0-> Ajuda/\n");
      print!("Opção: ");
      read(&mut opcao);
@@ -105,7 +106,7 @@ fn main() -> Result<()>
           println!("\nInsira o ID do Contato que deseja Deletar: ");
           read(&mut id);
           let id: i32 = id.trim().parse().unwrap();
-//Todo listar informações do contato removido 
+//Todo listar informacoes do contato removido 
           cria_banco.execute("DELETE FROM Contatos where id = ?",&[&id]).unwrap();
           println!("{}","\nContato deletado com Sucesso!".red().bold());
      }
