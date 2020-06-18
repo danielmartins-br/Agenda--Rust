@@ -4,10 +4,10 @@
 
 ### Requisitos:
 ##### -> Inclusão de Contatos na Agenda
-##### -> Alteração do Contato
-##### -> Exclusão do Contato
-##### -> Consulta dos Contatos
-##### -> Listagem dos Contatos Inseridos
+##### -> Alteração do Cadastro
+##### -> Exclusão de Cadastros
+##### -> Consulta dos Dados Inseridos
+##### -> Listagem de Todos os Contatos
 
 ### Lista de Tarefas:
 - [x] Criar Conexão com Banco de Dados
